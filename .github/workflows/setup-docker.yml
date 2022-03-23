@@ -1,11 +1,6 @@
 name: Build Custom EMR Spark Image
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'docker-images/hako-spark-emr/*'
+on: push
 
 env:
   ENV: stg
