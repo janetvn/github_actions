@@ -6,6 +6,7 @@ env:
   ENV: stg
   AWS_ACCOUNT_ID: 296723344747
   AWS_REGION: ap-southeast-1
+  DOCKER_VERSION: 5:20.10.13~3-0~ubuntu-focal
 
 jobs:
   build-spark-image:
@@ -19,7 +20,7 @@ jobs:
 #          role-to-assume: $AWS_ACCOUNT_ID
 #          aws-regio: $AWS_REGION
 #          role-session-name: GithubActions
-      - name: Set up Docker Buildx
+      - name: Set up Docker Build
         run: |
           sudo apt update
           sudo apt install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
@@ -27,3 +28,6 @@ jobs:
           sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
           sudo apt update
           apt list -a docker-ce
+          sudo apt install docker-ce=$DOCKER_VERSION docker-ce-cli=$DOCKER_VERSION containerd.io
+          sudo usermod -aG docker $USER
+          docker container run hello-world
